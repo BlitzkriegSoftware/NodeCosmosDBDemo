@@ -1,0 +1,16 @@
+{
+  "name": "cosmosnode",
+  "version": "1.0.0",
+  "description": "Demo of using NodeJs to call Microsoft Cosmos DB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Mongo",
+    "Cosmos",
+    "Node"
+  ],
+  "author": "Stuart Williams",
+  "license": "MIT"
+}
