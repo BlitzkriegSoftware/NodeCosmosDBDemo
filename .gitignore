@@ -30,4 +30,4 @@ node_modules
 npm-debug.log
 
 # Secret connection storing
-connection.txt
+settings.json

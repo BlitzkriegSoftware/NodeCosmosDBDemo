@@ -5,42 +5,57 @@ var fs = require('fs');
 
 var mongoClient = require("mongodb").MongoClient;
 
-// Collection Name
-var collectionName = "People";
+// This is the format of the configuration file (case sensitive)
+var settings = {
+    "ConnectionString" : "",
+    "Database" : "",
+    "Collection" : ""
+};
 
-// Put your CosmodDB connection string in this file
-var filename = "./connection.txt";
-var connectionString = "";
+
+// Change this query to whatever you like
+var query = { NameLast : /Mca/ };
+
+// Put your CosmodDB connection string and other settings in this file
+// This should be valid JSON, use http://jsonlint.com to verify
+
+var filename = "./settings.json";
 fs.readFile(filename, 'utf8', function (err, data) { 
     if(err) throw err;
-    connectionString = data;
-    console.log(connectionString);
-    doMongo(connectionString);
+
+    settings = JSON.parse(data);
+    
+    console.log(settings.ConnectionString);
+    console.log(settings.Database);
+    console.log(settings.Collection);
+    
+    doMongo();
 });
 
-// invoke some Mongo DB commands
+// Invoke some Mongo DB commands
 
-var doMongo = function(connectionString) {
-    mongoClient.connect(connectionString, function (err, db) {
+var doMongo = function() {
+    mongoClient.connect(settings.ConnectionString, function (err, db) {
         if(err) throw err;
-        var query = { NameLast : "Mckoan" };
+
+        // Switch DB from 'admin' (default) to the desired Database, this is far from obvious
+        db = db.db(settings.Database);
+        console.log('Current DB: ' + db.databaseName);
+        
+        // Find some records
         findRecords(db, query);
+
         db.close();
+        
+        // Exit Script Gracefully
         process.exitCode = 1;
     });
 }
 
-// Some Mongo Commands
-
+// Find Records and dump them to the console
 var findRecords = function(db, query) {
-    var cursor = db.collection(collectionName).find(query);
-    cursor.each(function(err, doc) {
+    db.collection(settings.Collection).find(query).toArray(function(err, items) {
         if(err) throw err;
-
-        if (doc != null) {
-            console.log(doc);
-        } else {
-            console.log('no records returned');
-        }
+        console.log(items);    
     });
 };
