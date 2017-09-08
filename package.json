@@ -4,7 +4,8 @@
   "description": "Demo of using NodeJs to call Microsoft Cosmos DB",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prestart": "npm install",
+    "start": "node index.js"
   },
   "keywords": [
     "Mongo",
@@ -12,5 +13,8 @@
     "Node"
   ],
   "author": "Stuart Williams",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "mongodb": "^2.2.31"
+  }
 }
