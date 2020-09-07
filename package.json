@@ -15,6 +15,6 @@
   "author": "Stuart Williams",
   "license": "MIT",
   "dependencies": {
-    "mongodb": "^2.2.31"
+    "mongodb": "^3.1.13"
   }
 }
